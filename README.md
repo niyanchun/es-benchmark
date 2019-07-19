@@ -19,17 +19,23 @@ mvn clean package
 
 Usage: <main class> [options]
   Options:
+    -f, --filename
+      read data from file and send it as message, if not null, -message will 
+      be ignored
     -h, --help
 
+    -p, --parallelism
+      how many thread to send data
+      Default: 1
     -bulkCount
       how many bulks will send
       Default: 1
     -bulkSize
       how many request in one bulk
       Default: 500
-    -f
-      read data from file and send it as message, if not null, -message will 
-      be ignored
+    -bulkTimeout
+      bulk request timeout, es default sets it to 30s, unit is second
+      Default: 30
     -hosts
       host1,host2,host3,...(not include port, port is 9200, and cannot change 
       for now!!!)
@@ -44,12 +50,10 @@ Usage: <main class> [options]
       length of message, if you specify -message, this parameter will be 
       ignored 
       Default: 100
-    -p
-      how many thread to send data
-      Default: 1
     -sync
       send to es in sync mode or async mode
       Default: true
+
 ``` 
 
 ## run benchmark

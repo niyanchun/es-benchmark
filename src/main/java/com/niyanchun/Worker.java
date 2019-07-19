@@ -11,6 +11,7 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
 
 import java.io.IOException;
@@ -76,8 +77,11 @@ public class Worker extends Thread {
             log.info("thread: {} start, index: {}, bulkCount: {}, bulkSize: {}, message(length:{}): {}",
                     currentThread().getName(), index, bulkCount, bulkSize, message.length(), message.substring(0, 100));
 
+            long bulkTimeout = args.getBulkTimeout();
+
             while (bulkCount > 0) {
                 BulkRequest request = getBulkRequest(index, bulkSize, message);
+                request.timeout(TimeValue.timeValueSeconds(bulkTimeout));
 
                 if (args.isSync()) {
                     try {
@@ -115,7 +119,8 @@ public class Worker extends Thread {
             }
 
             client = new RestHighLevelClient(
-                    RestClient.builder(httpHosts.toArray(new HttpHost[0])));
+                    RestClient.builder(httpHosts.toArray(new HttpHost[0]))
+                            .setMaxRetryTimeoutMillis(args.getBulkTimeout() * 1000));
         }
 
         return client;

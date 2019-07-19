@@ -18,7 +18,7 @@ public class Args {
             description = "host1,host2,host3,...(not include port, port is 9200, and cannot change for now!!!)")
     private String hosts = "127.0.0.1";
 
-    @Parameter(names = "-p", description = "how many thread to send data")
+    @Parameter(names = {"-p", "--parallelism"}, description = "how many thread to send data")
     private Integer parallelism = 1;
 
     @Parameter(names = "-sync", description = "send to es in sync mode or async mode")
@@ -41,7 +41,10 @@ public class Args {
             description = "length of message, if you specify -message, this parameter will be ignored")
     private Integer messageSize = 100;
 
-    @Parameter(names = "-f",
+    @Parameter(names = {"-f", "--filename"},
             description = "read data from file and send it as message, if not null, -message will be ignored")
     private String filename;
+
+    @Parameter(names = "-bulkTimeout", description = "bulk request timeout, es default sets it to 30s, unit is second")
+    private int bulkTimeout = 30;
 }
