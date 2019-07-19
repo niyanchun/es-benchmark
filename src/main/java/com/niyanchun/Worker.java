@@ -75,7 +75,8 @@ public class Worker extends Thread {
             }
 
             log.info("thread: {} start, index: {}, bulkCount: {}, bulkSize: {}, message(length:{}): {}",
-                    currentThread().getName(), index, bulkCount, bulkSize, message.length(), message.substring(0, 100));
+                    currentThread().getName(), index, bulkCount, bulkSize, message.length(),
+                    message.length() > 100 ? message.substring(0, 100) : message);
 
             long bulkTimeout = args.getBulkTimeout();
 
