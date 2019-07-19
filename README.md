@@ -58,6 +58,20 @@ Usage: <main class> [options]
 
 ## run benchmark
 
+1. Read data from file, if your data to send is large, this will be convenient:
+
+```bash
+java -jar es-benchmark-1.0-uber.jar  -hosts 192.168.9.1,192.168.9.2  -index benchmark-test -bulkCount 1000 -bulkSize 100 -p 16 -f data.txt
+```
+
+2. Or data to send is small, just specify in command line: 
+
+```bash
+java -jar es-benchmark-1.0-uber.jar  -hosts 192.168.9.1,192.168.9.2  -index benchmark-test -bulkCount 1000 -bulkSize 100 -p 16 -messageSize 100
+```
+
+3. Or you can just give a message length, random message will be produce automatically:
+
 ```bash
 java -jar es-benchmark-1.0-uber.jar  -hosts 192.168.9.1,192.168.9.2  -index benchmark-test -bulkCount 1000 -bulkSize 100 -p 16 -f data.txt
 ```
