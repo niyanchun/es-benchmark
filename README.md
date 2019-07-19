@@ -15,7 +15,7 @@ mvn clean package
 ## run uber jar and see help
 
 ```bash
-java -jar es-benchmark-1.0-uber.jar -h
+# java -jar es-benchmark-1.0-uber.jar -h
 
 Usage: <main class> [options]
   Options:
@@ -51,3 +51,9 @@ Usage: <main class> [options]
       send to es in sync mode or async mode
       Default: true
 ``` 
+
+## run benchmark
+
+```bash
+java -jar es-benchmark-1.0-uber.jar  -hosts 192.168.9.1,192.168.9.2  -index benchmark-test -bulkCount 1000 -bulkSize 100 -p 16 -f data.txt
+```
