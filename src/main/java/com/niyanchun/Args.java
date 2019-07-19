@@ -40,4 +40,8 @@ public class Args {
     @Parameter(names = "-messageSize",
             description = "length of message, if you specify -message, this parameter will be ignored")
     private Integer messageSize = 100;
+
+    @Parameter(names = "-f",
+            description = "read data from file and send it as message, if not null, -message will be ignored")
+    private String filename;
 }

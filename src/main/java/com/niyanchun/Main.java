@@ -3,6 +3,9 @@ package com.niyanchun;
 import com.beust.jcommander.JCommander;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -13,7 +16,6 @@ import java.util.concurrent.CountDownLatch;
  **/
 @Slf4j
 public class Main {
-
 
     public static void main(String[] argv) throws Exception {
         Args args = new Args();
@@ -29,13 +31,17 @@ public class Main {
 
         log.info("args: {}", args);
 
-        int parallelism = args.getParallelism();
+        String data = null;
+        if (args.getFilename() != null) {
+            data = readFile(args.getFilename());
+        }
 
+        int parallelism = args.getParallelism();
         CountDownLatch latch = new CountDownLatch(parallelism);
 
         long startTime = System.currentTimeMillis();
         while (parallelism > 0) {
-            Worker worker = new Worker("thread-" + parallelism, args, latch);
+            Worker worker = new Worker("thread-" + parallelism, args, latch, data);
             worker.start();
             parallelism--;
         }
@@ -52,4 +58,14 @@ public class Main {
         System.exit(0);
     }
 
+    private static String readFile(String filename) throws Exception {
+        File file = new File(filename);
+        Long fileLength = file.length();
+        byte[] fileContent = new byte[fileLength.intValue()];
+
+        InputStream inputStream = new FileInputStream(filename);
+        inputStream.read(fileContent);
+
+        return new String(fileContent);
+    }
 }

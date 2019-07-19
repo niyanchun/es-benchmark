@@ -28,17 +28,19 @@ import java.util.concurrent.CountDownLatch;
 public class Worker extends Thread {
     private static RestHighLevelClient client = null;
     private String threadName;
+    private String data;
 
     private Args args;
     private CountDownLatch latch;
 
 
-    public Worker(String threadName, Args args, CountDownLatch latch) {
+    public Worker(String threadName, Args args, CountDownLatch latch, String data) {
         super(threadName);
 
         this.threadName = threadName;
         this.args = args;
         this.latch = latch;
+        this.data = data;
     }
 
     private static BulkRequest getBulkRequest(String index, int bulkSize, String message) {
@@ -63,14 +65,16 @@ public class Worker extends Thread {
             int messageSize = args.getMessageSize();
 
             String message;
-            if (StringUtils.isBlank(args.getMessage())) {
+            if (this.data != null) {
+                message = this.data;
+            } else if (StringUtils.isBlank(args.getMessage())) {
                 message = RandomStringUtils.randomAlphanumeric(messageSize);
             } else {
                 message = args.getMessage();
             }
 
-            log.info("thread: {} start, index: {}, bulkCount: {}, bulkSize: {}",
-                    currentThread().getName(), index, bulkCount, bulkSize);
+            log.info("thread: {} start, index: {}, bulkCount: {}, bulkSize: {}, message(length:{}): {}",
+                    currentThread().getName(), index, bulkCount, bulkSize, message.length(), message.substring(0, 100));
 
             while (bulkCount > 0) {
                 BulkRequest request = getBulkRequest(index, bulkSize, message);
