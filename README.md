@@ -2,9 +2,21 @@
 
 This is an efficient ElasticSearch benchmark program using bulk API. 
 
+
+
 # Usage
 
-```sh
+## get uber jar
+
+```bash
+mvn clean package
+```
+
+## run uber jar and see help
+
+```bash
+java -jar es-benchmark-1.0-uber.jar -h
+
 Usage: <main class> [options]
   Options:
     -h, --help
@@ -15,6 +27,9 @@ Usage: <main class> [options]
     -bulkSize
       how many request in one bulk
       Default: 500
+    -f
+      read data from file and send it as message, if not null, -message will 
+      be ignored
     -hosts
       host1,host2,host3,...(not include port, port is 9200, and cannot change 
       for now!!!)
