@@ -52,7 +52,7 @@ public class Main {
         long endTime = System.currentTimeMillis();
         long sendData = args.getBulkSize() * args.getBulkCount() * args.getParallelism();
         long usedTime = (endTime - startTime) / 1000;
-        log.info("all thread has exit, Summary:\nthread: {}, send data: {} records, used time: {} s, speed: {} records/s",
+        log.info("all thread has exit, summary:\nthread: {}, send data: {} records, used time: {} s, speed: {} records/s",
                 args.getParallelism(), sendData, usedTime, usedTime > 0 ? (sendData / usedTime) : "NA");
 
         System.exit(0);
@@ -63,8 +63,9 @@ public class Main {
         Long fileLength = file.length();
         byte[] fileContent = new byte[fileLength.intValue()];
 
-        InputStream inputStream = new FileInputStream(filename);
-        inputStream.read(fileContent);
+        try (InputStream inputStream = new FileInputStream(filename)) {
+            inputStream.read(fileContent);
+        }
 
         return new String(fileContent);
     }
