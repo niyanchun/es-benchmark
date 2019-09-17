@@ -59,6 +59,8 @@ public class Worker extends Thread {
     @Override
     public void run() {
 
+        log.info("{} start...", currentThread().getName());
+
         try {
             String index = args.getIndex();
             int bulkCount = args.getBulkCount();
