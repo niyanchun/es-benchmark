@@ -21,8 +21,8 @@ public class Args {
     @Parameter(names = {"-p", "--parallelism"}, description = "how many thread to send data")
     private Integer parallelism = 1;
 
-    @Parameter(names = "-sync", description = "send to es in sync mode or async mode")
-    private boolean sync = true;
+    @Parameter(names = "-async", description = "send to es in async mode, default false")
+    private boolean async = false;
 
     @Parameter(names = "-index", description = "index name")
     private String index = "test";

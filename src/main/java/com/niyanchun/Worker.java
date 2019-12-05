@@ -86,7 +86,7 @@ public class Worker extends Thread {
                 BulkRequest request = getBulkRequest(index, bulkSize, message);
                 request.timeout(TimeValue.timeValueSeconds(bulkTimeout));
 
-                if (args.isSync()) {
+                if (!args.isAsync()) {
                     try {
                         getClient().bulk(request, RequestOptions.DEFAULT);
                     } catch (IOException e) {

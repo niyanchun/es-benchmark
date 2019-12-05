@@ -50,9 +50,9 @@ Usage: <main class> [options]
       length of message, if you specify -message, this parameter will be 
       ignored 
       Default: 100
-    -sync
-      send to es in sync mode or async mode
-      Default: true
+    -async
+      send to es in async mode, defalut false
+      Default: false
 
 ``` 
 
